@@ -1,12 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
 * {
   margin: 0;
   font-family: "Nunito", sans-serif;
 }
 html {
-  --main-gray: rgb(59, 59, 59);
-  --sec-gray: rgb(80, 80, 80);
+  --primary: rgb(59, 59, 59);
 }
 body {
   background: rgb(238, 238, 238);
@@ -15,7 +24,7 @@ body {
 .heading-container {
   width: 100vw;
   height: 150px;
-  background: var(--main-gray);
+  background: var(--primary);
   display: flex;
   align-items: center;
   padding-left: 50px;
@@ -31,16 +40,30 @@ body {
   width: 100vw;
   min-height: 100vh;
 }
+
 .projects-container {
-  border-right: 5px solid var(--sec-gray);
-  width: 600px;
+  border-right: 5px solid var(--primary);
+  width: 550px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding-top: 40px;
-  padding-left: 100px;
+  padding: 40px 100px;
 }
 .projects-heading {
-  color: var(--main-gray);
-  font-size: 2.5rem;
+  color: var(--primary);
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.project {
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 5px 25px;
+}
+.project-title {
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+.project:hover {
+  background-color: rgb(201, 201, 201);
 }

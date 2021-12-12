@@ -62,4 +62,23 @@ class PageCreation {
   }
 }
 
-export { PageCreation };
+var Projects = (function () {
+  function add(containerName, project) {
+    var container = document.querySelector(containerName);
+
+    var projectDiv = document.createElement("div");
+    var projectTitle = document.createElement("h3");
+    projectDiv.classList.add("project");
+    projectTitle.classList.add("project-title", "noselect");
+    projectTitle.textContent = project.name;
+
+    projectDiv.append(projectTitle);
+    container.append(projectDiv);
+  }
+
+  return { add };
+})();
+
+var addProject = Projects.add;
+
+export { PageCreation, addProject };

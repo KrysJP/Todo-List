@@ -1,14 +1,10 @@
-class Project {
-  constructor(name, color) {
-    this.name = name;
-    this.color = color;
-  }
+import { addDomProject } from "./dom-stuff.js";
 
-  editName(text) {
-    this.name = text;
-  }
-  editColor(color) {
-    this.color = color;
+class Project {
+  constructor(name, id) {
+    this.name = name;
+    this.tasks = [];
+    this.id = id;
   }
 }
 

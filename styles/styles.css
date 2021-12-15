@@ -52,7 +52,7 @@ body {
 }
 .projects-heading {
   color: var(--primary);
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
@@ -81,8 +81,15 @@ body {
   background-color: rgb(201, 201, 201);
 }
 
+.project-title {
+  font-size: 3rem;
+  color: var(--primary);
+}
+
 .projects-add,
-.project-remove {
+.remove,
+.edit,
+.complete {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,12 +98,66 @@ body {
   background: none;
 }
 
-.project-remove {
+.remove {
   height: 30px;
   width: 30px;
   font-size: 2.5rem;
   transform: rotate(45deg);
+  opacity: 0;
 }
-.project-remove:hover {
+.remove:hover,
+.edit:hover,
+.complete:hover {
   cursor: pointer;
+}
+
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 40px;
+  padding-top: 40px;
+  gap: 10px;
+}
+
+.task {
+  width: 80%;
+  display: flex;
+  border-radius: 30px;
+  height: 50px;
+  padding: 0 20px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid rgb(215, 215, 215);
+}
+.task:hover {
+  background: rgb(201, 201, 201);
+}
+.task-half {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.task-title {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.edit {
+  height: 30px;
+  width: 30px;
+  font-size: 2rem;
+  opacity: 0;
+}
+
+.complete {
+  border-radius: 50%;
+  font-size: 3rem;
+  color: black;
+  opacity: 50%;
+}
+.complete:hover {
+  color: green;
+  opacity: 1;
 }

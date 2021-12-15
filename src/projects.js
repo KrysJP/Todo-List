@@ -5,6 +5,11 @@ class Project {
     this.name = name;
     this.tasks = [];
     this.id = id;
+    this.selected = false;
+  }
+
+  addTask(task) {
+    this.tasks.push(task);
   }
 }
 

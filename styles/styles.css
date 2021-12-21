@@ -1,89 +1,89 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
 * {
-  margin: 0;
-  font-family: "Nunito", sans-serif;
+    margin: 0;
+    font-family: "Nunito", sans-serif;
 }
 html {
-  --primary: rgb(59, 59, 59);
+    --primary: rgb(59, 59, 59);
 }
 body {
-  background: rgb(238, 238, 238);
+    background: rgb(238, 238, 238);
 }
 
 .heading-container {
-  width: 100vw;
-  height: 150px;
-  background: var(--primary);
-  display: flex;
-  align-items: center;
-  padding-left: 50px;
-  box-sizing: border-box;
+    width: 100vw;
+    height: 150px;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+    box-sizing: border-box;
 }
 .heading-title {
-  color: white;
-  font-size: 4.5rem;
+    color: white;
+    font-size: 4.5rem;
 }
 
 .middle-container {
-  display: flex;
-  width: 100vw;
-  min-height: 100vh;
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
 }
 
 .projects-container {
-  border-right: 5px solid var(--primary);
-  width: 550px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  padding: 40px 80px;
-  gap: 5px;
+    border-right: 5px solid var(--primary);
+    width: 550px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 80px;
+    gap: 5px;
 }
 .projects-heading {
-  color: var(--primary);
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
+    color: var(--primary);
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 .projects-add {
-  width: 50px;
-  height: 50px;
-  font-size: 2.5rem;
+    width: 50px;
+    height: 50px;
+    font-size: 2.5rem;
 }
 .projects-add:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .project {
-  box-sizing: border-box;
-  border-radius: 20px;
-  padding: 0 25px;
-  color: var(--primary);
-  font-size: 1.8rem;
-  font-weight: normal;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 0 25px;
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: normal;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .project:hover {
-  background-color: rgb(201, 201, 201);
+    background-color: rgb(201, 201, 201);
 }
 
 .project-title {
-  font-size: 3rem;
-  color: var(--primary);
+    font-size: 3rem;
+    color: var(--primary);
 }
 
 .projects-add,
@@ -91,88 +91,88 @@ body {
 .edit,
 .complete,
 .tasks-add {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--primary);
-  border: none;
-  background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary);
+    border: none;
+    background: none;
 }
 
 .remove {
-  height: 30px;
-  width: 30px;
-  font-size: 2.5rem;
-  transform: rotate(45deg);
-  opacity: 0;
+    height: 30px;
+    width: 30px;
+    font-size: 2.5rem;
+    transform: rotate(45deg);
+    opacity: 0;
 }
 .remove:hover,
 .edit:hover,
 .complete:hover,
 .tasks-add:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
-.tasks-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-  padding-left: 40px;
-  padding-top: 40px;
-  gap: 10px;
+.tasks-and-title-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 40px;
+    padding-top: 40px;
+    gap: 10px;
 }
 
 .task {
-  width: 80%;
-  display: flex;
-  border-radius: 30px;
-  height: 50px;
-  padding: 0 20px;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 2px solid rgb(215, 215, 215);
-  margin-left: 20px;
+    width: 80%;
+    display: flex;
+    border-radius: 30px;
+    height: 50px;
+    padding: 0 20px;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid rgb(215, 215, 215);
+    margin-left: 20px;
 }
 .task:hover {
-  background: rgb(201, 201, 201);
+    background: rgb(201, 201, 201);
 }
 .task-half {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 .task-title {
-  font-size: 1.5rem;
-  font-weight: normal;
+    font-size: 1.5rem;
+    font-weight: normal;
 }
 
 .edit {
-  height: 30px;
-  width: 30px;
-  font-size: 2rem;
-  opacity: 0;
+    height: 30px;
+    width: 30px;
+    font-size: 2rem;
+    opacity: 0;
 }
 
 .complete {
-  border-radius: 50%;
-  font-size: 3rem;
-  color: black;
-  opacity: 50%;
+    border-radius: 50%;
+    font-size: 3rem;
+    color: black;
+    opacity: 50%;
 }
 .complete:hover {
-  color: green;
-  opacity: 1;
+    color: green;
+    opacity: 1;
 }
 
 .project-title-div {
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .tasks-add {
-  font-size: 3rem;
+    font-size: 3rem;
 }

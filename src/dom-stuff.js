@@ -62,13 +62,17 @@ class PageCreation {
         return div;
     }
     tasks(title) {
-        var div = document.createElement("div");
+        var bigDiv = document.createElement("div");
+        var tasksDiv = document.createElement("div");
 
-        div.classList.add("tasks-container");
+        bigDiv.classList.add("tasks-and-title-container");
+        tasksDiv.classList.add("tasks-container");
 
-        this.projectTitleDiv(div, title);
+        this.projectTitleDiv(bigDiv, title);
 
-        return div;
+        bigDiv.append(tasksDiv);
+
+        return bigDiv;
     }
     projectTitleDiv(div, title) {
         var titleDiv = document.createElement("div");
@@ -243,4 +247,11 @@ var TaskManagement = (function () {
     return { add, remove, load };
 })();
 
-export { PageCreation, ProjectManagement, TaskManagement };
+// removes all of an element's
+function clearContainer(element) {
+    while (element.lastChild) {
+        element.removeChild(element.lastChild);
+    }
+}
+
+export { PageCreation, ProjectManagement, TaskManagement, clearContainer };

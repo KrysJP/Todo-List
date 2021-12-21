@@ -2,6 +2,7 @@ import {
     PageCreation,
     ProjectManagement,
     TaskManagement,
+    clearContainer,
 } from "./dom-stuff.js";
 import Project from "./projects.js";
 import Task from "./tasks.js";
@@ -30,6 +31,7 @@ function addProject() {
         id
     );
 }
+
 // removing a project from the DOM and projects list
 function removeProject(id) {
     var index = findProjectIndex(projects, id);
@@ -43,6 +45,7 @@ function removeProject(id) {
     // switching to the project after removal
     switchProject(projects[index - 1].id);
 }
+
 function switchProject(id) {
     // changing the current project
     window.currentProjectId = id;
@@ -59,6 +62,10 @@ function switchProject(id) {
         }
     });
 
+    // clearing all the tasks
+    var tasksContainer = document.querySelector(".tasks-container");
+    clearContainer(tasksContainer);
+
     // loading all project's tasks
     TaskManagement.load(projects[index]);
 }
@@ -67,6 +74,7 @@ function addTask() {
     var projectIndex = findProjectIndex(projects, currentProjectId);
     var id = 0;
     // keep incrementing id until no tasks share the id
+    // therefore id will always be unique to the projects
     while (
         projects.some((project) => {
             return project.tasks.some((task) => {

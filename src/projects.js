@@ -1,5 +1,3 @@
-import { addDomProject } from "./dom-stuff.js";
-
 class Project {
   constructor(name, id) {
     this.name = name;
@@ -10,6 +8,16 @@ class Project {
 
   addTask(task) {
     this.tasks.push(task);
+  }
+
+  // DOM stuff
+  unhighlight() {
+    var domProject = document.querySelector("#project" + String(this.id));
+    domProject.style["background"] = "rgb(238, 238, 238)";
+  }
+  highlight() {
+    var domProject = document.querySelector("#project" + String(this.id));
+    domProject.style["background"] = "rgb(201, 201, 201)";
   }
 }
 

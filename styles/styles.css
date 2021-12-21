@@ -89,7 +89,8 @@ body {
 .projects-add,
 .remove,
 .edit,
-.complete {
+.complete,
+.tasks-add {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,7 +108,8 @@ body {
 }
 .remove:hover,
 .edit:hover,
-.complete:hover {
+.complete:hover,
+.tasks-add:hover {
   cursor: pointer;
 }
 
@@ -130,6 +132,7 @@ body {
   align-items: center;
   justify-content: space-between;
   border-bottom: 2px solid rgb(215, 215, 215);
+  margin-left: 20px;
 }
 .task:hover {
   background: rgb(201, 201, 201);
@@ -160,4 +163,16 @@ body {
 .complete:hover {
   color: green;
   opacity: 1;
+}
+
+.project-title-div {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tasks-add {
+  font-size: 3rem;
 }

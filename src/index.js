@@ -1,67 +1,111 @@
 import {
-  PageCreation,
-  ProjectManagement,
-  TaskManagement,
+    PageCreation,
+    ProjectManagement,
+    TaskManagement,
 } from "./dom-stuff.js";
 import Project from "./projects.js";
 import Task from "./tasks.js";
 
+window.currentProjectId = 0;
 var projects = [];
 var page = new PageCreation("#content");
 
 // creating the default project
 projects.push(new Project("Main", 0));
-page.create(projects[0].title);
+page.create(projects[0].name);
 ProjectManagement.add(".projects-container", projects[0], 0);
-
-// test tasks
-addTask(projects[0]);
-addTask(projects[0]);
-
+switchProject(0);
+// adding a project to the list
 function addProject() {
-  var id = 0;
-  while (projects.some((project) => project.id === id)) {
-    id++;
-  }
-  var name = prompt("Enter Project name");
-  projects.push(new Project(name, id));
-  ProjectManagement.add(
-    ".projects-container",
-    projects[projects.length - 1],
-    id
-  );
-}
-// removing a project from the DOM
-function removeProject(id) {
-  projects.forEach((project) => {
-    if (project.id === id) {
-      ProjectManagement.remove(id);
-      projects.splice(projects.indexOf(project), projects.indexOf(project));
+    var id = 0;
+    while (projects.some((project) => project.id === id)) {
+        id++;
     }
-  });
+    var name = prompt("Enter Project name");
+    projects.push(new Project(name, id));
+    // adding it to the DOM
+    ProjectManagement.add(
+        ".projects-container",
+        projects[projects.length - 1],
+        id
+    );
+}
+// removing a project from the DOM and projects list
+function removeProject(id) {
+    var index = findProjectIndex(projects, id);
+
+    // removing from the DOM
+    ProjectManagement.remove(id);
+
+    // removing from projects list
+    projects.splice(index, index);
+
+    // switching to the project after removal
+    switchProject(projects[index - 1].id);
+}
+function switchProject(id) {
+    // changing the current project
+    window.currentProjectId = id;
+
+    var index = findProjectIndex(projects, id);
+
+    // highlighting current task and unhighlighting the rest
+    projects[index].highlight();
+    projects[index].selected = true;
+    projects.forEach((project) => {
+        if (project.id !== id) {
+            project.unhighlight();
+            project.selected = false;
+        }
+    });
+
+    // loading all project's tasks
+    TaskManagement.load(projects[index]);
 }
 
-function addTask(project) {
-  var id = 0;
-  // keep incrementing id until no tasks share the id
-  while (
-    projects.some(function (project) {
-      project.tasks.some((task) => {
-        task.id == id;
-      });
-    })
-  ) {
-    id++;
-  }
+function addTask() {
+    var projectIndex = findProjectIndex(projects, currentProjectId);
+    var id = 0;
+    // keep incrementing id until no tasks share the id
+    while (
+        projects.some((project) => {
+            return project.tasks.some((task) => {
+                return task.id == id;
+            });
+        })
+    ) {
+        id++;
+    }
 
-  // var title = prompt("Enter Task name");
-  var title = "example";
-  project.tasks.push(new Task(title, id));
+    var title = prompt("Enter Task name");
+    projects[projectIndex].tasks.push(new Task(title, id));
 
-  TaskManagement.add(
-    ".tasks-container",
-    project.tasks[project.tasks.length - 1],
-    id
-  );
+    TaskManagement.add(
+        ".tasks-container",
+        projects[projectIndex].tasks[projects[projectIndex].tasks.length - 1],
+        id
+    );
 }
-export { addProject, removeProject };
+function removeTask(id) {
+    projects.forEach((project) => {
+        project.tasks.forEach((task) => {
+            if (task.id == id) {
+                TaskManagement.remove(id);
+                project.tasks.splice(
+                    project.tasks.indexOf(task),
+                    project.tasks.indexOf(task)
+                );
+            }
+        });
+    });
+}
+
+export { addProject, removeProject, addTask, removeTask, switchProject };
+
+function findProjectIndex(projects, id) {
+    for (let i = 0; i < projects.length; i++) {
+        if (projects[i].id === id) {
+            return i;
+        }
+    }
+}

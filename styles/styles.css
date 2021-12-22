@@ -21,6 +21,14 @@ body {
     background: rgb(238, 238, 238);
 }
 
+input {
+    outline: none;
+    padding: 0;
+}
+h4 {
+    font-weight: normal;
+}
+
 .heading-container {
     width: 100vw;
     height: 150px;
@@ -175,4 +183,18 @@ body {
 
 .tasks-add {
     font-size: 3rem;
+}
+
+.project-title-input {
+    font-size: 3rem;
+    color: var(--primary);
+    background: none;
+    border: none;
+    font-weight: bold;
+}
+
+.tasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

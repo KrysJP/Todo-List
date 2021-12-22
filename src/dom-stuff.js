@@ -98,15 +98,20 @@ var ProjectManagement = (function () {
         var container = document.querySelector(containerName);
 
         var div = document.createElement("div");
+        var projectTitleInProjectsTab = document.createElement("h4");
         var remove = document.createElement("button");
         div.classList.add("project", "noselect");
         remove.classList.add("noselect", "remove");
 
-        eventListeners(project, div, remove, id);
+        // individual project title functionality
+        var projectTitle = document.querySelector(".project-title");
 
-        div.textContent = project.name;
+        eventListeners(project, div, remove, id, projectTitle);
+
+        projectTitleInProjectsTab.textContent = project.name;
         remove.textContent = "+";
 
+        div.append(projectTitleInProjectsTab);
         // so that main cannot be removed
         if (id !== 0) {
             div.append(remove);
@@ -114,6 +119,7 @@ var ProjectManagement = (function () {
 
         container.append(div);
 
+        // settings the div's id
         div.id = "project" + String(id);
 
         return div;
@@ -130,7 +136,7 @@ var ProjectManagement = (function () {
         button.style.opacity = 0;
     }
 
-    function eventListeners(project, div, remove, id) {
+    function eventListeners(project, div, remove, id, projectTitle) {
         // to have the remove button show up when hovered over only
         div.addEventListener("mouseover", () => {
             reveal(remove);
@@ -155,7 +161,87 @@ var ProjectManagement = (function () {
         });
     }
 
-    return { add, remove };
+    function editProjectTitle(project) {
+        if (project.id === 0) {
+            return;
+        }
+        // needed elements
+        var projectTitleDiv = document.querySelector(".project-title-div");
+        var projectTitle = document.querySelector(".project-title");
+
+        // removing the project title
+        projectTitleDiv.removeChild(projectTitle);
+
+        // creating the input box
+        var inputBox = document.createElement("input");
+        inputBox.type = "text";
+        inputBox.required = "true";
+        inputBox.value = project.name;
+        inputBox.classList.add("project-title-input");
+
+        // enter key event listener
+        inputBox.addEventListener("keypress", function (e) {
+            if (e.key == "Enter") {
+                setProjectTitle(project, projectTitleDiv, inputBox);
+            }
+        });
+
+        // replacing the title
+        projectTitleDiv.insertBefore(
+            inputBox,
+            document.querySelector(".tasks-add")
+        );
+        // so it is selected automatically
+        inputBox.select();
+    }
+
+    function setProjectTitle(project, projectTitleDiv, inputBox) {
+        var value = inputBox.value;
+        // setting new project name
+        project.name = value;
+
+        // removing inputBox
+        projectTitleDiv.removeChild(inputBox);
+
+        // inserting heading with new name
+        var newTitle = document.createElement("h3");
+        newTitle.textContent = value;
+        newTitle.classList.add("project-title");
+        projectTitleDiv.insertBefore(
+            newTitle,
+            document.querySelector(".tasks-add")
+        );
+        newTitle.addEventListener("click", editProjectTitle);
+
+        // editing project in project tab
+        var domProject = document.querySelector(
+            "#project" + String(project.id)
+        );
+        domProject.children[0].textContent = value;
+    }
+
+    function removeProjectTitleEventListener() {
+        var element = document.querySelector(".project-title");
+        // clone and replace
+        var newElement = element.cloneNode(true);
+        element.parentNode.replaceChild(newElement, element);
+    }
+
+    function replaceProjectTitle(project) {
+        var projectTitle = document.querySelector(".project-title");
+        var newProjectTitle = projectTitle.cloneNode(true);
+        newProjectTitle.addEventListener("click", () => {
+            editProjectTitle(project);
+        });
+        projectTitle.parentNode.replaceChild(newProjectTitle, projectTitle);
+    }
+
+    return {
+        add,
+        remove,
+        removeProjectTitleEventListener,
+        replaceProjectTitle,
+    };
 })();
 
 var TaskManagement = (function () {

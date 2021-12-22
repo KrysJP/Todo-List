@@ -36,14 +36,19 @@ function addProject() {
 function removeProject(id) {
     var index = findProjectIndex(projects, id);
 
+    // checking if it was selected
+    var isSelected = projects[index].selected;
+
     // removing from the DOM
     ProjectManagement.remove(id);
 
     // removing from projects list
-    projects.splice(index, index);
+    projects.splice(index, 1);
 
-    // switching to the project after removal
-    switchProject(projects[index - 1].id);
+    // switching to the project after removal if it was selected
+    if (isSelected) {
+        switchProject(projects[index - 1].id);
+    }
 }
 
 function switchProject(id) {
@@ -51,6 +56,9 @@ function switchProject(id) {
     window.currentProjectId = id;
 
     var index = findProjectIndex(projects, id);
+
+    // replacing the event listener on the project title
+    ProjectManagement.replaceProjectTitle(projects[index]);
 
     // highlighting current task and unhighlighting the rest
     projects[index].highlight();
@@ -68,6 +76,11 @@ function switchProject(id) {
 
     // loading all project's tasks
     TaskManagement.load(projects[index]);
+
+    // removing event listener on title if main
+    if (id === 0) {
+        ProjectManagement.removeProjectTitleEventListener();
+    }
 }
 
 function addTask() {
@@ -86,6 +99,8 @@ function addTask() {
     }
 
     var title = prompt("Enter Task name");
+
+    // adding the task to the project
     projects[projectIndex].tasks.push(new Task(title, id));
 
     TaskManagement.add(
@@ -95,13 +110,12 @@ function addTask() {
     );
 }
 function removeTask(id) {
+    TaskManagement.remove(id);
     projects.forEach((project) => {
         project.tasks.forEach((task) => {
             if (task.id == id) {
-                TaskManagement.remove(id);
-                project.tasks.splice(
-                    project.tasks.indexOf(task),
-                    project.tasks.indexOf(task)
+                project.tasks = project.tasks.filter(
+                    (filterTask) => task !== filterTask
                 );
             }
         });

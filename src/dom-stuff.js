@@ -134,6 +134,7 @@ var ProjectManagement = (function () {
         var remove = document.createElement("button");
         div.classList.add("project", "noselect");
         remove.classList.add("noselect", "remove");
+        projectTitleInProjectsTab.classList.add("project-tab-name");
 
         // individual project title functionality
         var projectTitle = document.querySelector(".project-title");

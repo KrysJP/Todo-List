@@ -105,8 +105,7 @@ function addTask() {
 
     TaskManagement.add(
         ".tasks-container",
-        projects[projectIndex].tasks[projects[projectIndex].tasks.length - 1],
-        id
+        projects[projectIndex].tasks[projects[projectIndex].tasks.length - 1]
     );
 }
 function removeTask(id) {

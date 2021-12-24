@@ -16,7 +16,11 @@ class PageCreation {
 
     // wrapping function
     create(projectTitle = "") {
-        this.content.append(this.heading(), this.middle(projectTitle));
+        this.content.append(
+            this.heading(),
+            this.middle(projectTitle),
+            this.modal()
+        );
     }
 
     heading() {
@@ -90,6 +94,34 @@ class PageCreation {
 
         div.append(titleDiv);
     }
+
+    modal() {
+        // dark background
+        var bg = document.createElement("div");
+        bg.classList.add("modal-bg");
+
+        // modal itself
+        var modal = document.createElement("div");
+        modal.classList.add("edit-task-modal");
+
+        // putting everything together
+        modal.append(close);
+        bg.append(modal);
+
+        // closing modal via clicking bg
+        bg.addEventListener("click", () => {
+            bg.style.display = "none";
+        });
+        // clicking modal doesn't close modal
+        modal.addEventListener("click", (event) => {
+            event.stopPropagation();
+        });
+
+        // removing weird text in modal after adding EL
+        modal.textContent = "";
+
+        return bg;
+    }
 }
 
 var ProjectManagement = (function () {
@@ -130,7 +162,7 @@ var ProjectManagement = (function () {
     }
 
     function reveal(button) {
-        button.style.opacity = 1;
+        button.style.opacity = 0.5;
     }
     function hide(button) {
         button.style.opacity = 0;
@@ -175,7 +207,7 @@ var ProjectManagement = (function () {
         // creating the input box
         var inputBox = document.createElement("input");
         inputBox.type = "text";
-        inputBox.required = "true";
+        inputBox.setAttribute("required", "");
         inputBox.value = project.name;
         inputBox.classList.add("project-title-input");
 
@@ -211,7 +243,9 @@ var ProjectManagement = (function () {
             newTitle,
             document.querySelector(".tasks-add")
         );
-        newTitle.addEventListener("click", editProjectTitle);
+        newTitle.addEventListener("click", () => {
+            editProjectTitle(project);
+        });
 
         // editing project in project tab
         var domProject = document.querySelector(
@@ -245,7 +279,7 @@ var ProjectManagement = (function () {
 })();
 
 var TaskManagement = (function () {
-    function add(containerName, task, id) {
+    function add(containerName, task) {
         var container = document.querySelector(containerName);
 
         var div = document.createElement("div");
@@ -253,17 +287,18 @@ var TaskManagement = (function () {
         var right = document.createElement("div");
         var title = document.createElement("h4");
         var complete = document.createElement("button");
-        var edit = document.createElement("button");
+        var edit = document.createElement("span");
         var remove = document.createElement("button");
 
         remove.textContent = "+";
-        edit.textContent = "e";
+        edit.textContent = "edit";
+        edit.classList.add("material-icons");
         complete.innerHTML = "&#10004;";
 
         // adding all classes
         addClasses(div, remove, complete, edit, title, left, right);
 
-        eventListeners(div, complete, edit, remove, id);
+        eventListeners(div, complete, edit, remove, task);
 
         title.textContent = task.title;
 
@@ -272,13 +307,13 @@ var TaskManagement = (function () {
         div.append(left, right);
         container.append(div);
 
-        div.id = "task" + String(id);
+        div.id = "task" + String(task.id);
 
         return div;
     }
 
     function mouseover(button) {
-        button.style.opacity = 1;
+        button.style.opacity = 0.5;
     }
     function mouseout(button) {
         button.style.opacity = 0;
@@ -298,7 +333,7 @@ var TaskManagement = (function () {
         });
     }
 
-    function eventListeners(div, complete, edit, remove, id) {
+    function eventListeners(div, complete, edit, remove, task) {
         // to have the remove button show up when hovered over only
         div.addEventListener("mouseover", () => {
             mouseover(remove);
@@ -310,13 +345,17 @@ var TaskManagement = (function () {
         });
 
         remove.addEventListener("click", () => {
-            removeTask(id);
+            removeTask(task.id);
         });
 
         // complete and edit event listeners ***
         complete.addEventListener("click", () => {
             // temporary until actual completion functionality is added
-            removeTask(id);
+            removeTask(task.id);
+        });
+
+        edit.addEventListener("click", () => {
+            openModal(task);
         });
     }
 
@@ -328,6 +367,11 @@ var TaskManagement = (function () {
         title.classList.add("task-title");
         left.classList.add("task-half");
         right.classList.add("task-half");
+    }
+
+    function openModal(task) {
+        var modalBg = document.querySelector(".modal-bg");
+        modalBg.style.display = "flex";
     }
 
     return { add, remove, load };

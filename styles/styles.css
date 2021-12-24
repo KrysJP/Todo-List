@@ -13,12 +13,21 @@
 * {
     margin: 0;
     font-family: "Nunito", sans-serif;
+    box-sizing: border-box;
 }
 html {
     --primary: rgb(59, 59, 59);
 }
 body {
     background: rgb(238, 238, 238);
+    display: flex;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
 }
 
 input {
@@ -37,6 +46,7 @@ h4 {
     align-items: center;
     padding-left: 50px;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 .heading-title {
     color: white;
@@ -46,7 +56,7 @@ h4 {
 .middle-container {
     display: flex;
     width: 100vw;
-    min-height: 100vh;
+    flex-grow: 1;
 }
 
 .projects-container {
@@ -102,9 +112,14 @@ h4 {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--primary);
+    color: black;
     border: none;
     background: none;
+}
+
+.projects-add,
+.tasks-add {
+    color: var(--primary) !important;
 }
 
 .remove {
@@ -116,23 +131,23 @@ h4 {
 }
 .remove:hover,
 .edit:hover,
-.complete:hover,
+.complete:hover {
+    cursor: pointer;
+    opacity: 0.7 !important;
+}
 .tasks-add:hover {
     cursor: pointer;
 }
 
 .tasks-and-title-container {
-    display: flex;
-    flex-direction: column;
     width: 100%;
     box-sizing: border-box;
     padding-left: 40px;
     padding-top: 40px;
-    gap: 10px;
 }
 
 .task {
-    width: 80%;
+    width: 70%;
     display: flex;
     border-radius: 30px;
     height: 50px;
@@ -140,7 +155,7 @@ h4 {
     align-items: center;
     justify-content: space-between;
     border-bottom: 2px solid rgb(215, 215, 215);
-    margin-left: 20px;
+    margin-left: 50px;
 }
 .task:hover {
     background: rgb(201, 201, 201);
@@ -197,4 +212,32 @@ h4 {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding-top: 20px;
+}
+
+/* modal stuff */
+.modal-bg {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0, 0, 0, 0.5);
+    top: 0;
+}
+
+.edit-task-modal {
+    display: flex;
+    width: 600px;
+    height: 600px;
+    background: rgb(238, 238, 238);
+    border-radius: 40px;
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 40px 0;
+    position: relative;
+    border: 5px solid var(--primary);
 }

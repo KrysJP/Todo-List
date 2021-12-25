@@ -14,13 +14,14 @@
     margin: 0;
     font-family: "Nunito", sans-serif;
     box-sizing: border-box;
+    color: var(--primary);
 }
 html {
     --primary: rgb(59, 59, 59);
-    min-width: 930px;
+    --secondary: rgb(238, 238, 238);
 }
 body {
-    background: rgb(238, 238, 238);
+    background: var(--secondary);
     display: flex;
     min-height: 100vh;
     overflow-x: hidden;
@@ -31,7 +32,8 @@ body {
     flex-direction: column;
 }
 
-input {
+input,
+textarea {
     outline: none;
     padding: 0;
 }
@@ -70,7 +72,6 @@ h4 {
     gap: 5px;
 }
 .projects-heading {
-    color: var(--primary);
     font-size: 2.2rem;
     margin-bottom: 10px;
     display: flex;
@@ -89,7 +90,6 @@ h4 {
     box-sizing: border-box;
     border-radius: 20px;
     padding: 0 25px;
-    color: var(--primary);
     font-size: 1.8rem;
     font-weight: normal;
     display: flex;
@@ -103,7 +103,6 @@ h4 {
 
 .project-title {
     font-size: 3rem;
-    color: var(--primary);
     overflow-x: hidden;
     width: 900px;
 }
@@ -172,6 +171,8 @@ h4 {
 .task-title {
     font-size: 1.5rem;
     font-weight: normal;
+    width: 700px;
+    overflow-x: hidden;
 }
 
 .edit {
@@ -206,7 +207,6 @@ h4 {
 
 .project-title-input {
     font-size: 3rem;
-    color: var(--primary);
     background: none;
     border: none;
     font-weight: bold;
@@ -235,13 +235,13 @@ h4 {
 .edit-task-modal {
     display: flex;
     width: 600px;
-    height: 600px;
-    background: rgb(238, 238, 238);
+    height: 550px;
+    background: var(--secondary);
     border-radius: 40px;
     box-sizing: border-box;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
     padding: 40px 0;
     position: relative;
     border: 5px solid var(--primary);
@@ -250,4 +250,51 @@ h4 {
 .project-tab-name {
     overflow-x: hidden;
     width: 80%;
+}
+
+.modal-save {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    margin-top: 20px;
+    background: rgb(0, 255, 0, 0.2);
+    font-size: 2rem;
+    color: rgb(14, 90, 14);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+.modal-save:hover {
+    cursor: pointer;
+    background: rgb(0, 255, 0, 0.4);
+}
+
+.modal-title {
+    font-size: 3rem;
+    width: 500px;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    height: 56px;
+    overflow-y: hidden;
+}
+.modal-date {
+    font-size: 1.5rem;
+    background: var(--secondary);
+    border: none;
+    margin-top: 20px;
+}
+.modal-description {
+    width: 500px;
+    height: 200px;
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 1.2rem;
+}
+
+.task-date {
+    font-size: 1.1rem;
+    margin-right: 20px;
 }

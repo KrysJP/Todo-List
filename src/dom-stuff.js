@@ -104,13 +104,31 @@ class PageCreation {
         var modal = document.createElement("div");
         modal.classList.add("edit-task-modal");
 
-        // putting everything together
-        modal.append(close);
-        bg.append(modal);
+        // modal innards
+        var title = document.createElement("h2");
+        title.classList.add("modal-title");
 
-        // closing modal via clicking bg
+        var date = document.createElement("input");
+        date.type = "date";
+        date.classList.add("modal-date");
+
+        var description = document.createElement("textarea");
+        description.classList.add("modal-description");
+        description.placeholder = "description...";
+
+        var save = document.createElement("div");
+        save.classList.add("modal-save", "material-icons", "noselect");
+        save.textContent = "edit";
+
+        // closing modal via clicking bg or pressing escape
         bg.addEventListener("click", () => {
             bg.style.display = "none";
+        });
+        // on the whole body:
+        document.body.addEventListener("keyup", (event) => {
+            if (event.key === "Escape") {
+                bg.style.display = "none";
+            }
         });
         // clicking modal doesn't close modal
         modal.addEventListener("click", (event) => {
@@ -119,6 +137,10 @@ class PageCreation {
 
         // removing weird text in modal after adding EL
         modal.textContent = "";
+
+        // putting everything together
+        modal.append(title, date, description, save);
+        bg.append(modal);
 
         return bg;
     }
@@ -290,21 +312,23 @@ var TaskManagement = (function () {
         var complete = document.createElement("button");
         var edit = document.createElement("span");
         var remove = document.createElement("button");
+        var date = document.createElement("p");
 
         remove.textContent = "+";
         edit.textContent = "edit";
         edit.classList.add("material-icons");
         complete.innerHTML = "&#10004;";
+        date.textContent = task.date;
 
         // adding all classes
-        addClasses(div, remove, complete, edit, title, left, right);
+        addClasses(div, remove, complete, edit, title, left, right, date);
 
         eventListeners(div, complete, edit, remove, task);
 
         title.textContent = task.title;
 
         left.append(complete, title);
-        right.append(edit, remove);
+        right.append(date, edit, remove);
         div.append(left, right);
         container.append(div);
 
@@ -360,7 +384,7 @@ var TaskManagement = (function () {
         });
     }
 
-    function addClasses(div, remove, complete, edit, title, left, right) {
+    function addClasses(div, remove, complete, edit, title, left, right, date) {
         div.classList.add("task", "noselect");
         remove.classList.add("remove", "noselect");
         edit.classList.add("edit", "noselect");
@@ -368,11 +392,18 @@ var TaskManagement = (function () {
         title.classList.add("task-title");
         left.classList.add("task-half");
         right.classList.add("task-half");
+        date.classList.add("task-date");
     }
 
     function openModal(task) {
+        // making it appear
         var modalBg = document.querySelector(".modal-bg");
         modalBg.style.display = "flex";
+
+        // matching the details *** need to add dates
+        document.querySelector(".modal-title").textContent = task.title;
+        document.querySelector(".modal-date").textContent = "no date";
+        document.querySelector(".modal-description").value = task.description;
     }
 
     return { add, remove, load };

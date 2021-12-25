@@ -16,13 +16,19 @@ projects.push(new Project("Main", 0));
 page.create(projects[0].name);
 ProjectManagement.add(".projects-container", projects[0], 0);
 switchProject(0);
+
 // adding a project to the list
 function addProject() {
+    var name = prompt("Enter Project name");
+    if (name === "" || name === null) {
+        return;
+    }
+
     var id = 0;
     while (projects.some((project) => project.id === id)) {
         id++;
     }
-    var name = prompt("Enter Project name");
+
     projects.push(new Project(name, id));
     // adding it to the DOM
     ProjectManagement.add(
@@ -84,6 +90,11 @@ function switchProject(id) {
 }
 
 function addTask() {
+    var title = prompt("Enter Task Name");
+    if (title === "" || title === null) {
+        return;
+    }
+
     var projectIndex = findProjectIndex(projects, currentProjectId);
     var id = 0;
     // keep incrementing id until no tasks share the id
@@ -97,8 +108,6 @@ function addTask() {
     ) {
         id++;
     }
-
-    var title = prompt("Enter Task name");
 
     // adding the task to the project
     projects[projectIndex].tasks.push(new Task(title, id));

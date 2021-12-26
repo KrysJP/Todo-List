@@ -6,6 +6,7 @@ import {
     removeTask,
     switchProject,
 } from "./index.js";
+import Task from "./tasks";
 
 // responsible for creating each part of the page
 class PageCreation {
@@ -133,6 +134,9 @@ class PageCreation {
         // clicking modal doesn't close modal
         modal.addEventListener("click", (event) => {
             event.stopPropagation();
+        });
+        title.addEventListener("click", () => {
+            TaskManagement.editModalTitle();
         });
 
         // removing weird text in modal after adding EL
@@ -284,6 +288,7 @@ var ProjectManagement = (function () {
         element.parentNode.replaceChild(newElement, element);
     }
 
+    // this gives the project title the INITIAL event listener, because default project is main and main does not require the event listener
     function replaceProjectTitle(project) {
         var projectTitle = document.querySelector(".project-title");
         var newProjectTitle = projectTitle.cloneNode(true);
@@ -334,7 +339,28 @@ var TaskManagement = (function () {
 
         div.id = "task" + String(task.id);
 
+        changeDateColor(task, date);
+
         return div;
+    }
+
+    // changing colour depending on date
+    function changeDateColor(task, dateElement) {
+        var currentDate = new Date();
+        if (task.dateObject) {
+            // if on the day
+            if (currentDate.toDateString() === task.dateObject.toDateString()) {
+                dateElement.style.color = "darkorange";
+            }
+            // if past
+            else if (currentDate > task.dateObject) {
+                dateElement.style.color = "red";
+            }
+            // if due
+            else {
+                dateElement.style.color = "var(--primary)";
+            }
+        }
     }
 
     function mouseover(button) {
@@ -399,6 +425,7 @@ var TaskManagement = (function () {
         // making it appear
         var modalBg = document.querySelector(".modal-bg");
         modalBg.style.display = "flex";
+        replaceSaveButton(task);
 
         // matching the details *** need to add dates
         document.querySelector(".modal-title").textContent = task.title;
@@ -406,7 +433,86 @@ var TaskManagement = (function () {
         document.querySelector(".modal-description").value = task.description;
     }
 
-    return { add, remove, load };
+    function editModalTitle() {
+        // needed elements
+        var modal = document.querySelector(".edit-task-modal");
+        var modalTitle = document.querySelector(".modal-title");
+
+        // saving title
+        var value = modalTitle.textContent;
+        // removing the modal title
+        modal.removeChild(modalTitle);
+
+        // creating the input box
+        var inputBox = document.createElement("input");
+        inputBox.type = "text";
+        inputBox.setAttribute("required", "");
+        inputBox.value = value;
+        inputBox.classList.add("modal-title-input");
+
+        // enter key event listener
+        inputBox.addEventListener("keypress", function (e) {
+            if (e.key == "Enter") {
+                setModalTitle(modal, inputBox);
+            }
+        });
+
+        // replacing the title
+        modal.insertBefore(inputBox, document.querySelector(".modal-date"));
+        // so it is selected automatically
+        inputBox.select();
+    }
+    function setModalTitle(modal, inputBox) {
+        var value = inputBox.value;
+
+        // removing inputBox
+        modal.removeChild(inputBox);
+
+        // inserting heading with new name
+        var newTitle = document.createElement("h3");
+        newTitle.textContent = value;
+        newTitle.classList.add("modal-title");
+        modal.insertBefore(newTitle, document.querySelector(".modal-date"));
+        newTitle.addEventListener("click", () => {
+            editModalTitle();
+        });
+    }
+    // this gives the save button the event listener to actually save the changes to the title
+    function replaceSaveButton(task) {
+        var saveButton = document.querySelector(".modal-save");
+        var newSaveButton = saveButton.cloneNode(true);
+        newSaveButton.addEventListener("click", () => {
+            setTaskDetails(task);
+        });
+        saveButton.parentNode.replaceChild(newSaveButton, saveButton);
+    }
+
+    // *** make sure it only works if no input box
+    function setTaskDetails(task) {
+        if (!document.querySelector(".modal-title")) {
+            setModalTitle(
+                document.querySelector(".edit-task-modal"),
+                document.querySelector(".modal-title-input")
+            );
+        }
+        // saving to the object
+        task.title = document.querySelector(".modal-title").textContent;
+        task.storedDate = document.querySelector(".modal-date").value;
+        task.description = document.querySelector(".modal-description").value;
+
+        // changing the task in task list
+        var taskListTask = document.querySelector("#task" + String(task.id));
+        taskListTask.children[0].children[1].textContent = task.title;
+        taskListTask.children[1].children[0].textContent = task.date;
+
+        // closing the modal
+        document.querySelector(".modal-bg").style.display = "none";
+
+        // updating color of date
+        changeDateColor(task, taskListTask.children[1].children[0]);
+    }
+
+    return { add, remove, load, editModalTitle };
 })();
 
 // removes all of an element's

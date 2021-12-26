@@ -10,7 +10,16 @@ class Task {
         if (this.storedDate === "") {
             return "no date";
         }
-        return this.storedDate;
+        var dateObject = new Date(this.storedDate);
+        return dateObject.toLocaleDateString();
+    }
+
+    get dateObject() {
+        if (this.storedDate === "") {
+            return false;
+        }
+        var dateObject = new Date(this.storedDate);
+        return dateObject;
     }
 }
 

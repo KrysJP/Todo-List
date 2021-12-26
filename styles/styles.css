@@ -276,7 +276,7 @@ h4 {
     overflow-x: hidden;
     display: flex;
     justify-content: center;
-    height: 56px;
+    height: 60px;
     overflow-y: hidden;
 }
 .modal-date {
@@ -297,4 +297,15 @@ h4 {
 .task-date {
     font-size: 1.1rem;
     margin-right: 20px;
+}
+
+.modal-title-input {
+    background: none;
+    border: none;
+    font-weight: bold;
+    font-size: 3rem;
+    width: 500px;
+    height: 60px;
+    overflow-y: hidden;
+    text-align: center;
 }

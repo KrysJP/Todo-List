@@ -161,6 +161,7 @@ h4 {
 }
 .task:hover {
     background: rgb(220, 220, 220);
+    cursor: pointer;
 }
 .task-half {
     display: flex;
@@ -282,6 +283,9 @@ h4 {
     background: var(--secondary);
     border: none;
     margin-top: 20px;
+}
+.modal-date:hover {
+    cursor: pointer;
 }
 .modal-description {
     width: 500px;

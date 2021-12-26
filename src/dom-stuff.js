@@ -378,11 +378,9 @@ var TaskManagement = (function () {
         // to have the remove button show up when hovered over only
         div.addEventListener("mouseover", () => {
             mouseover(remove);
-            mouseover(edit);
         });
         div.addEventListener("mouseout", () => {
             mouseout(remove);
-            mouseout(edit);
         });
         div.addEventListener("click", () => {
             openModal(task);
@@ -418,7 +416,11 @@ var TaskManagement = (function () {
         replaceSaveButton(task);
 
         document.querySelector(".modal-title").textContent = task.title;
-        document.querySelector(".modal-date").value = null;
+        if (task.storedDate === "") {
+            document.querySelector(".modal-date").value = null;
+        } else {
+            document.querySelector(".modal-date").value = task.storedDate;
+        }
         document.querySelector(".modal-description").value = task.description;
     }
 

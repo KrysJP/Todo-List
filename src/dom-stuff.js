@@ -6,7 +6,6 @@ import {
     removeTask,
     switchProject,
 } from "./index.js";
-import Task from "./tasks";
 
 // responsible for creating each part of the page
 class PageCreation {
@@ -125,12 +124,6 @@ class PageCreation {
         bg.addEventListener("click", () => {
             bg.style.display = "none";
         });
-        // on the whole body:
-        document.body.addEventListener("keyup", (event) => {
-            if (event.key === "Escape") {
-                bg.style.display = "none";
-            }
-        });
         // clicking modal doesn't close modal
         modal.addEventListener("click", (event) => {
             event.stopPropagation();
@@ -195,7 +188,7 @@ var ProjectManagement = (function () {
         button.style.opacity = 0;
     }
 
-    function eventListeners(project, div, remove, id, projectTitle) {
+    function eventListeners(project, div, remove, id) {
         // to have the remove button show up when hovered over only
         div.addEventListener("mouseover", () => {
             reveal(remove);
@@ -315,25 +308,22 @@ var TaskManagement = (function () {
         var right = document.createElement("div");
         var title = document.createElement("h4");
         var complete = document.createElement("button");
-        var edit = document.createElement("span");
         var remove = document.createElement("button");
         var date = document.createElement("p");
 
         remove.textContent = "+";
-        edit.textContent = "edit";
-        edit.classList.add("material-icons");
         complete.innerHTML = "&#10004;";
         date.textContent = task.date;
 
         // adding all classes
-        addClasses(div, remove, complete, edit, title, left, right, date);
+        addClasses(div, remove, complete, title, left, right, date);
 
-        eventListeners(div, complete, edit, remove, task);
+        eventListeners(div, complete, remove, task);
 
         title.textContent = task.title;
 
         left.append(complete, title);
-        right.append(date, edit, remove);
+        right.append(date, remove);
         div.append(left, right);
         container.append(div);
 
@@ -384,7 +374,7 @@ var TaskManagement = (function () {
         });
     }
 
-    function eventListeners(div, complete, edit, remove, task) {
+    function eventListeners(div, complete, remove, task) {
         // to have the remove button show up when hovered over only
         div.addEventListener("mouseover", () => {
             mouseover(remove);
@@ -394,26 +384,26 @@ var TaskManagement = (function () {
             mouseout(remove);
             mouseout(edit);
         });
+        div.addEventListener("click", () => {
+            openModal(task);
+        });
 
-        remove.addEventListener("click", () => {
+        remove.addEventListener("click", (e) => {
             removeTask(task.id);
+            e.stopPropagation();
         });
 
         // complete and edit event listeners ***
-        complete.addEventListener("click", () => {
+        complete.addEventListener("click", (e) => {
             // temporary until actual completion functionality is added
             removeTask(task.id);
-        });
-
-        edit.addEventListener("click", () => {
-            openModal(task);
+            e.stopPropagation();
         });
     }
 
-    function addClasses(div, remove, complete, edit, title, left, right, date) {
+    function addClasses(div, remove, complete, title, left, right, date) {
         div.classList.add("task", "noselect");
         remove.classList.add("remove", "noselect");
-        edit.classList.add("edit", "noselect");
         complete.classList.add("complete", "noselect");
         title.classList.add("task-title");
         left.classList.add("task-half");
@@ -427,9 +417,8 @@ var TaskManagement = (function () {
         modalBg.style.display = "flex";
         replaceSaveButton(task);
 
-        // matching the details *** need to add dates
         document.querySelector(".modal-title").textContent = task.title;
-        document.querySelector(".modal-date").textContent = "no date";
+        document.querySelector(".modal-date").value = null;
         document.querySelector(".modal-description").value = task.description;
     }
 
@@ -487,7 +476,6 @@ var TaskManagement = (function () {
         saveButton.parentNode.replaceChild(newSaveButton, saveButton);
     }
 
-    // *** make sure it only works if no input box
     function setTaskDetails(task) {
         if (!document.querySelector(".modal-title")) {
             setModalTitle(

@@ -10,6 +10,10 @@ import Task from "./tasks.js";
 window.currentProjectId = 0;
 var projects = [];
 
+// constants
+var taskTitleLength = 11;
+var projectTitleWordLength = 10;
+
 var page = new PageCreation("#content");
 page.create();
 
@@ -69,7 +73,6 @@ switchProject(window.currentProjectId);
 
 // localStorage stuff
 function populateStorage() {
-    console.log("saved");
     localStorage.setItem(
         "currentProjectId",
         JSON.stringify(window.currentProjectId)
@@ -89,6 +92,20 @@ function setStyles() {
 function addProject() {
     var name = prompt("Enter Project name");
     if (name === "" || name === null) {
+        return;
+    }
+    var fine = true;
+    var separatedName = name.match(/[\w]+/g);
+    separatedName.every((word) => {
+        if (word.length > projectTitleWordLength) {
+            fine = false;
+            return false;
+        }
+    });
+    if (!fine) {
+        alert(
+            `Max word length for project names is ${projectTitleWordLength} chararacters`
+        );
         return;
     }
 
@@ -166,6 +183,20 @@ function addTask() {
     if (title === "" || title === null) {
         return;
     }
+    var fine = true;
+    var separatedTitle = title.match(/[\w]+/g);
+    separatedTitle.every((word) => {
+        if (word.length > taskTitleLength) {
+            fine = false;
+            return false;
+        }
+    });
+    if (!fine) {
+        alert(
+            `Max word length for task titles is ${taskTitleLength} chararacters`
+        );
+        return;
+    }
 
     var projectIndex = findProjectIndex(projects, currentProjectId);
     var id = 0;
@@ -213,6 +244,8 @@ export {
     removeTask,
     switchProject,
     populateStorage,
+    taskTitleLength,
+    projectTitleWordLength,
 };
 
 function findProjectIndex(projects, id) {

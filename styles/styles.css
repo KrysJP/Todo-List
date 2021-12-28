@@ -64,7 +64,7 @@ h4 {
 
 .projects-container {
     border-right: 5px solid var(--primary);
-    width: 650px;
+    width: 670px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -95,7 +95,7 @@ h4 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 350px;
+    width: 370px;
 }
 .project:hover {
     background-color: rgb(201, 201, 201);
@@ -275,8 +275,8 @@ h4 {
     overflow-x: hidden;
     display: flex;
     justify-content: center;
-    height: 60px;
-    overflow-y: hidden;
+    height: 66px;
+    overflow: overlay;
 }
 .modal-date {
     font-size: 1.5rem;
@@ -308,7 +308,6 @@ h4 {
     font-weight: bold;
     font-size: 3rem;
     width: 500px;
-    height: 60px;
-    overflow-y: hidden;
+    height: 66px;
     text-align: center;
 }

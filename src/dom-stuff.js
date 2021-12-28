@@ -6,6 +6,8 @@ import {
     removeTask,
     switchProject,
     populateStorage,
+    taskTitleLength,
+    projectTitleWordLength,
 } from "./index.js";
 
 // responsible for creating each part of the page
@@ -248,6 +250,22 @@ var ProjectManagement = (function () {
     }
 
     function setProjectTitle(project, projectTitleDiv, inputBox) {
+        // length check
+        var fine = true;
+        var separatedName = inputBox.value.match(/[\w]+/g);
+        separatedName.every((word) => {
+            if (word.length > projectTitleWordLength) {
+                fine = false;
+                return false;
+            }
+            return true;
+        });
+        if (!fine) {
+            alert(
+                `Max word length for project names is ${projectTitleWordLength} chararacters`
+            );
+            return;
+        }
         var value = inputBox.value;
         // setting new project name
         project.name = value;
@@ -457,6 +475,20 @@ var TaskManagement = (function () {
         inputBox.select();
     }
     function setModalTitle(modal, inputBox) {
+        var fine = true;
+        var separatedTitle = inputBox.value.match(/[\w]+/g);
+        separatedTitle.every((word) => {
+            if (word.length > taskTitleLength) {
+                fine = false;
+                return false;
+            }
+        });
+        if (!fine) {
+            alert(
+                `Max word length for task titles is ${taskTitleLength} chararacters`
+            );
+            return;
+        }
         var value = inputBox.value;
 
         // removing inputBox

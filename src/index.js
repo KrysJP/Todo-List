@@ -9,13 +9,81 @@ import Task from "./tasks.js";
 
 window.currentProjectId = 0;
 var projects = [];
-var page = new PageCreation("#content");
 
-// creating the default project
-projects.push(new Project("Main", 0));
-page.create(projects[0].name);
-ProjectManagement.add(".projects-container", projects[0], 0);
-switchProject(0);
+var page = new PageCreation("#content");
+page.create();
+
+// testing if storage is populated
+if (!localStorage.getItem("projects")) {
+    // creating the default project
+    projects.push(new Project("General", 0));
+    populateStorage(window.currentProjectId, projects);
+} else {
+    projects = setStyles();
+}
+
+// adding the methods back
+// projects
+projects.forEach((project) => {
+    project.unhighlight = function () {
+        var domProject = document.querySelector("#project" + String(this.id));
+        domProject.style["background"] = "rgb(238, 238, 238)";
+    };
+    project.highlight = function () {
+        var domProject = document.querySelector("#project" + String(this.id));
+        domProject.style["background"] = "rgb(201, 201, 201)";
+    };
+});
+
+// tasks
+projects.forEach((project) => {
+    project.tasks.forEach((task) => {
+        Object.defineProperty(task, "date", {
+            get: function () {
+                if (this.storedDate === "") {
+                    return "no date";
+                }
+                var dateObject = new Date(this.storedDate);
+                return dateObject.toLocaleDateString();
+            },
+        });
+
+        Object.defineProperty(task, "dateObject", {
+            get: function () {
+                if (this.storedDate === "") {
+                    return false;
+                }
+                var dateObject = new Date(this.storedDate);
+                return dateObject;
+            },
+        });
+    });
+});
+
+// loading projects
+projects.forEach((project) => {
+    ProjectManagement.add(".projects-container", project, project.id);
+});
+
+switchProject(window.currentProjectId);
+
+// localStorage stuff
+function populateStorage() {
+    console.log("saved");
+    localStorage.setItem(
+        "currentProjectId",
+        JSON.stringify(window.currentProjectId)
+    );
+    localStorage.setItem("projects", JSON.stringify(projects));
+}
+
+function setStyles() {
+    var currentProjectIdData = localStorage.getItem("currentProjectId");
+    window.currentProjectId = JSON.parse(currentProjectIdData);
+    var projectsData = localStorage.getItem("projects");
+    projects = JSON.parse(projectsData);
+    return projects;
+}
 
 // adding a project to the list
 function addProject() {
@@ -36,6 +104,8 @@ function addProject() {
         projects[projects.length - 1],
         id
     );
+
+    populateStorage();
 }
 
 // removing a project from the DOM and projects list
@@ -55,6 +125,7 @@ function removeProject(id) {
     if (isSelected) {
         switchProject(projects[index - 1].id);
     }
+    populateStorage();
 }
 
 function switchProject(id) {
@@ -87,6 +158,7 @@ function switchProject(id) {
     if (id === 0) {
         ProjectManagement.removeProjectTitleEventListener();
     }
+    populateStorage();
 }
 
 function addTask() {
@@ -116,6 +188,9 @@ function addTask() {
         ".tasks-container",
         projects[projectIndex].tasks[projects[projectIndex].tasks.length - 1]
     );
+
+    // save
+    populateStorage();
 }
 function removeTask(id) {
     TaskManagement.remove(id);
@@ -128,9 +203,17 @@ function removeTask(id) {
             }
         });
     });
+    populateStorage();
 }
 
-export { addProject, removeProject, addTask, removeTask, switchProject };
+export {
+    addProject,
+    removeProject,
+    addTask,
+    removeTask,
+    switchProject,
+    populateStorage,
+};
 
 function findProjectIndex(projects, id) {
     for (let i = 0; i < projects.length; i++) {

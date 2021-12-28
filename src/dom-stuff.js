@@ -5,6 +5,7 @@ import {
     addTask,
     removeTask,
     switchProject,
+    populateStorage,
 } from "./index.js";
 
 // responsible for creating each part of the page
@@ -38,12 +39,12 @@ class PageCreation {
     }
 
     // includes projects and tasks (under heading, above footer)
-    middle(title) {
+    middle() {
         var bigDiv = document.createElement("div");
 
         bigDiv.classList.add("middle-container");
 
-        bigDiv.append(this.projects(), this.tasks(title));
+        bigDiv.append(this.projects(), this.tasks());
 
         return bigDiv;
     }
@@ -65,26 +66,25 @@ class PageCreation {
 
         return div;
     }
-    tasks(title) {
+    tasks() {
         var bigDiv = document.createElement("div");
         var tasksDiv = document.createElement("div");
 
         bigDiv.classList.add("tasks-and-title-container");
         tasksDiv.classList.add("tasks-container");
 
-        this.projectTitleDiv(bigDiv, title);
+        this.projectTitleDiv(bigDiv);
 
         bigDiv.append(tasksDiv);
 
         return bigDiv;
     }
-    projectTitleDiv(div, title) {
+    projectTitleDiv(div) {
         var titleDiv = document.createElement("div");
         var theTitle = document.createElement("h3");
         var addButton = document.createElement("button");
         theTitle.classList.add("project-title");
         addButton.classList.add("tasks-add");
-        theTitle.textContent = title;
         addButton.textContent = "+";
         titleDiv.classList.add("project-title-div");
 
@@ -272,6 +272,9 @@ var ProjectManagement = (function () {
             "#project" + String(project.id)
         );
         domProject.children[0].textContent = value;
+
+        // save
+        populateStorage();
     }
 
     function removeProjectTitleEventListener() {
@@ -500,6 +503,9 @@ var TaskManagement = (function () {
 
         // updating color of date
         changeDateColor(task, taskListTask.children[1].children[0]);
+
+        // save to storage
+        populateStorage();
     }
 
     return { add, remove, load, editModalTitle };

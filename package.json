@@ -1,30 +1,30 @@
 {
-  "name": "todo-list",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "open": "webpack serve --open"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/KrysJP/Todo-List.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/KrysJP/Todo-List/issues"
-  },
-  "homepage": "https://github.com/KrysJP/Todo-List#readme",
-  "devDependencies": {
-    "css-loader": "^6.5.1",
-    "style-loader": "^3.3.1",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.6.0"
-  },
-  "dependencies": {
-    "date-fns": "^2.27.0"
-  }
+    "name": "todo-list",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "open": "webpack serve --open"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KrysJP/Todo-List.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/KrysJP/Todo-List/issues"
+    },
+    "homepage": "https://krysjp.github.io/Todo-List/",
+    "devDependencies": {
+        "css-loader": "^6.5.1",
+        "style-loader": "^3.3.1",
+        "webpack-cli": "^4.9.1",
+        "webpack-dev-server": "^4.6.0"
+    },
+    "dependencies": {
+        "date-fns": "^2.27.0"
+    }
 }

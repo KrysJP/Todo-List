@@ -198,7 +198,7 @@ function addTask() {
         return;
     }
 
-    var projectIndex = findProjectIndex(projects, currentProjectId);
+    var projectIndex = findProjectIndex(projects, window.currentProjectId);
     var id = 0;
     // keep incrementing id until no tasks share the id
     // therefore id will always be unique to the projects

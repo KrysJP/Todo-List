@@ -9,7 +9,9 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/KrysJP/Todo-List.git"
+        "url": "git+https://github.com/KrysJP/Todo-List.git",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
     },
     "keywords": [],
     "author": "",
@@ -20,6 +22,7 @@
     "homepage": "https://krysjp.github.io/Todo-List/",
     "devDependencies": {
         "css-loader": "^6.5.1",
+        "gh-pages": "^3.2.3",
         "style-loader": "^3.3.1",
         "webpack-cli": "^4.9.1",
         "webpack-dev-server": "^4.6.0"

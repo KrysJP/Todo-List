@@ -4,7 +4,7 @@ module.exports = {
     entry: "./src/index.js",
     output: {
         filename: "main.js",
-        path: path.resolve(__dirname, "docs"),
+        path: path.resolve(__dirname, "dist"),
     },
     module: {
         rules: [
@@ -17,6 +17,6 @@ module.exports = {
     mode: "development",
     devtool: "inline-source-map",
     devServer: {
-        static: "./docs",
+        static: "./dist",
     },
 };

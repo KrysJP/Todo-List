@@ -17,7 +17,7 @@
     "bugs": {
         "url": "https://github.com/KrysJP/Todo-List/issues"
     },
-    "homepage": "https://krysjp.github.io/Todo-List/",
+    "homepage": "https://krysjp.github.io/",
     "devDependencies": {
         "css-loader": "^6.5.1",
         "style-loader": "^3.3.1",
